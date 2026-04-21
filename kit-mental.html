@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kit Mental Bien-être</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #F4F1EC;
+  color: #1C1A17;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ===== VARIABLES ===== */
+:root {
+  --bg: #F4F1EC;
+  --surface: #FFFFFF;
+  --surface2: #EDEAE3;
+  --border: #D9D5CC;
+  --border2: #C4BFB4;
+  --text: #1C1A17;
+  --text2: #6B6660;
+  --text3: #9C9890;
+  --purple: #4C44C6;
+  --purple-bg: #ECEAFF;
+  --teal: #1B7C62;
+  --teal-bg: #DDF3EC;
+  --coral: #C94030;
+  --coral-bg: #FCECEA;
+  --amber: #B86E10;
+  --amber-bg: #FDF2DC;
+  --r: 10px;
+  --r-sm: 6px;
+}
+
+/* ===== LAYOUT ===== */
+.app { display: flex; min-height: 100vh; }
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.logo {
+  padding: 28px 20px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.logo-title {
+  font-size: 20px;
+  font-weight: normal;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.logo-sub {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav { padding: 12px 10px; flex: 1; }
+
+.nav-section {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding: 10px 10px 6px;
+  margin-top: 6px;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border: none;
+  background: none;
+  border-radius: var(--r-sm);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 13.5px;
+  color: var(--text2);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+  margin-bottom: 1px;
+}
+.nav-btn:hover { background: var(--surface2); color: var(--text); }
+.nav-btn.active { background: var(--purple-bg); color: var(--purple); font-weight: 500; }
+
+.nav-num {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--text3);
+}
+.nav-btn.active .nav-num { background: var(--purple); color: white; }
+
+/* ===== MAIN ===== */
+.main {
+  flex: 1;
+  padding: 40px 48px;
+  max-width: 820px;
+  min-width: 0;
+}
+
+/* ===== PAGES ===== */
+.page { display: none; }
+.page.active { display: block; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===== PAGE HEADER ===== */
+.page-header { margin-bottom: 32px; }
+.page-tag {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--purple);
+  background: var(--purple-bg);
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+}
+.page-title {
+  font-size: 34px;
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+.page-desc {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.65;
+  max-width: 560px;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  margin-bottom: 14px;
+}
+.card-title {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.card-sub {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 16px;
+}
+
+/* ===== GRID ===== */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 24px; }
+.grid-home { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+
+/* ===== HOME CARDS ===== */
+.home-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.home-card:hover { border-color: var(--border2); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+.home-card-icon { font-size: 24px; margin-bottom: 12px; }
+.home-card-name {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.home-card-desc {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 12px;
+  color: var(--text3);
+  line-height: 1.5;
+}
+
+/* ===== PILL ===== */
+.pill {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.pill-purple { background: var(--purple-bg); color: var(--purple); }
+.pill-teal   { background: var(--teal-bg);   color: var(--teal); }
+.pill-coral  { background: var(--coral-bg);  color: var(--coral); }
+.pill-amber  { background: var(--amber-bg);  color: var(--amber); }
+
+/* ===== LABEL ===== */
+.lbl {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 6px;
+  margin-top: 14px;
+  letter-spacing: 0.02em;
+}
+.lbl:first-child { margin-top: 0; }
+
+/* ===== INPUTS ===== */
+input[type=text], textarea, select {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+  margin-bottom: 0;
+}
+input[type=text]:focus, textarea:focus { border-color: var(--purple); background: var(--surface); }
+textarea { min-height: 80px; resize: vertical; line-height: 1.55; }
+
+/* ===== BUTTONS ===== */
+.btn {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  color: var(--text);
+  margin-top: 14px;
+}
+.btn:hover { background: var(--surface2); }
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: var(--purple); color: white; border-color: var(--purple); }
+.btn-primary:hover { background: #3D37B0; border-color: #3D37B0; }
+.btn-sm {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  padding: 7px 13px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.15s;
+  margin: 0;
+}
+.btn-sm:hover { background: var(--surface2); }
+.btn-group { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+/* ===== RESULT BOX ===== */
+.result-box {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: var(--purple-bg);
+  border-left: 3px solid var(--purple);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  padding: 14px 16px;
+  font-size: 13.5px;
+  color: var(--text);
+  line-height: 1.7;
+  margin-top: 14px;
+  display: none;
+}
+.result-box.show { display: block; animation: fadeIn 0.2s ease; }
+.result-box p { margin-bottom: 8px; }
+.result-box p:last-child { margin-bottom: 0; }
+.result-box strong { color: var(--purple); }
+.result-box em { color: var(--text); font-style: italic; }
+
+/* ===== INFO BOX ===== */
+.info-box {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: var(--surface2);
+  border-radius: var(--r-sm);
+  padding: 14px 16px;
+  font-size: 13.5px;
+  color: var(--text2);
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+.info-box strong { color: var(--text); }
+
+/* ===== BROOKE CHAIN ===== */
+.brooke-chain {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.brooke-step {
+  flex: 1;
+  padding: 16px 10px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.brooke-step:last-child { border-right: none; }
+.bs-letter {
+  font-size: 26px;
+  font-style: italic;
+  font-weight: normal;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.bs-name {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.bs-sub {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+/* ===== CROY TABLE ===== */
+.croy-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+.croy-table td {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  padding: 10px 14px;
+  font-size: 13px;
+  vertical-align: middle;
+}
+.croy-table tr { border-bottom: 1px solid var(--border); }
+.croy-table tr:last-child { border-bottom: none; }
+.croy-lim { background: var(--coral-bg); border-radius: 6px 0 0 6px; color: #7A2018; width: 44%; }
+.croy-res { background: var(--teal-bg); border-radius: 0 6px 6px 0; color: #0E5040; width: 44%; }
+.croy-arrow { text-align: center; color: var(--text3); font-size: 18px; width: 12%; }
+
+/* ===== SMART ROW ===== */
+.smart-cell {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 16px 10px;
+  text-align: center;
+}
+.smart-letter {
+  font-size: 30px;
+  font-style: italic;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.smart-word {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 11px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+/* ===== EISENHOWER ===== */
+.eis-labels {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.eis-axis-y {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-align: center;
+  align-self: center;
+}
+.eis-right { display: flex; flex-direction: column; gap: 8px; }
+.eis-axis-x {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+  padding-left: 28px;
+}
+.eis-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.quad {
+  border-radius: var(--r-sm);
+  padding: 14px;
+  min-height: 110px;
+}
+.quad-head {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.quad-action {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 10px;
+  opacity: 0.7;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+.quad-list { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px; }
+.quad-item { padding: 3px 0; border-bottom: 1px solid rgba(0,0,0,0.07); }
+.quad-item:last-child { border-bottom: none; }
+.quad-item::before { content: '· '; opacity: 0.5; }
+
+.q1 { background: var(--coral-bg); color: #7A2018; }
+.q2 { background: var(--teal-bg);  color: #0E5040; }
+.q3 { background: var(--amber-bg); color: #7A4A0C; }
+.q4 { background: var(--surface2); color: #4A4640; }
+
+/* ===== KARPMAN ===== */
+.karp-triangle { text-align: center; margin: 20px 0; }
+.karp-svg { max-width: 360px; }
+.karp-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.karp-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 14px;
+}
+.karp-card-title {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.karp-card-body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.55;
+}
+
+/* ===== ASSERTIVITE ===== */
+.assert-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.assert-card {
+  border-radius: var(--r-sm);
+  padding: 14px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.assert-card:hover { transform: translateY(-2px); }
+.assert-card.active-style { border-color: var(--teal); }
+.assert-title {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.assert-body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
+/* ===== CHECKLIST ===== */
+.prog-bar-wrap { margin-bottom: 20px; }
+.prog-bar-info {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+.prog-bar-track {
+  height: 5px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.prog-bar-fill {
+  height: 100%;
+  background: var(--purple);
+  border-radius: 3px;
+  transition: width 0.35s ease;
+}
+.cl-list { display: flex; flex-direction: column; gap: 6px; }
+.cl-item {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+.cl-item:hover { border-color: var(--border2); }
+.cl-item.done { opacity: 0.45; }
+.cl-check {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 10px;
+  color: white;
+  transition: all 0.2s;
+}
+.cl-item.done .cl-check { background: var(--purple); border-color: var(--purple); }
+.cl-text { flex: 1; font-size: 13.5px; line-height: 1.4; }
+.cl-item.done .cl-text { text-decoration: line-through; color: var(--text3); }
+.cl-day {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  letter-spacing: 0.04em;
+}
+
+/* ===== SEPARATOR ===== */
+.sep { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-title">Kit Mental<br>Bien-être</div>
+    <div class="logo-sub">7 outils psychologiques</div>
+  </div>
+  <nav class="nav">
+    <button class="nav-btn active" onclick="go('home')"><span class="nav-num">⌂</span> Accueil</button>
+    <div class="nav-section">Les outils</div>
+    <button class="nav-btn" onclick="go('brooke')"><span class="nav-num">1</span> Modèle de Brooke</button>
+    <button class="nav-btn" onclick="go('croyances')"><span class="nav-num">2</span> Croyances</button>
+    <button class="nav-btn" onclick="go('smart')"><span class="nav-num">3</span> Objectif SMART</button>
+    <button class="nav-btn" onclick="go('eisenhower')"><span class="nav-num">4</span> Matrice Eisenhower</button>
+    <button class="nav-btn" onclick="go('karpman')"><span class="nav-num">5</span> Triangle Karpman</button>
+    <button class="nav-btn" onclick="go('assertivite')"><span class="nav-num">6</span> Assertivité</button>
+    <div class="nav-section">Action</div>
+    <button class="nav-btn" onclick="go('antistress')"><span class="nav-num">✓</span> Plan anti-stress</button>
+  </nav>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- HOME -->
+<div id="home" class="page active">
+  <div class="page-header">
+    <div class="page-tag">Bienvenue</div>
+    <h1 class="page-title">Ton kit mental<br>bien-être</h1>
+    <p class="page-desc">7 outils psychologiques pour mieux te comprendre, gérer le stress, décider avec clarté et communiquer avec assurance.</p>
+  </div>
+  <div class="grid-home">
+    <div class="home-card" onclick="go('brooke')">
+      <div class="home-card-icon">🔗</div>
+      <div class="home-card-name">Modèle de Brooke</div>
+      <div class="home-card-desc">Comprendre comment tes pensées génèrent tes résultats</div>
+    </div>
+    <div class="home-card" onclick="go('croyances')">
+      <div class="home-card-icon">💡</div>
+      <div class="home-card-name">Croyances</div>
+      <div class="home-card-desc">De la croyance limitante à la croyance ressource</div>
+    </div>
+    <div class="home-card" onclick="go('smart')">
+      <div class="home-card-icon">🎯</div>
+      <div class="home-card-name">Objectif SMART</div>
+      <div class="home-card-desc">Formuler des objectifs de bien-être concrets</div>
+    </div>
+    <div class="home-card" onclick="go('eisenhower')">
+      <div class="home-card-icon">📊</div>
+      <div class="home-card-name">Matrice Eisenhower</div>
+      <div class="home-card-desc">Trier ses tâches par urgence et importance</div>
+    </div>
+    <div class="home-card" onclick="go('karpman')">
+      <div class="home-card-icon">🔺</div>
+      <div class="home-card-name">Triangle Karpman</div>
+      <div class="home-card-desc">Sortir des rôles du triangle dramatique</div>
+    </div>
+    <div class="home-card" onclick="go('assertivite')">
+      <div class="home-card-icon">🗣</div>
+      <div class="home-card-name">Assertivité</div>
+      <div class="home-card-desc">Exprimer ses besoins sans agressivité ni soumission</div>
+    </div>
+    <div class="home-card" onclick="go('antistress')">
+      <div class="home-card-icon">📋</div>
+      <div class="home-card-name">Plan anti-stress</div>
+      <div class="home-card-desc">Checklist J-7 à Jour J pour réussir sereinement</div>
+    </div>
+  </div>
+</div>
+
+<!-- BROOKE -->
+<div id="brooke" class="page">
+  <div class="page-header">
+    <div class="page-tag">Outil 1</div>
+    <h1 class="page-title">Le modèle de Brooke</h1>
+    <p class="page-desc">Toute expérience humaine suit une chaîne causale. Identifier chaque maillon te permet d'intervenir là où tu as le plus de pouvoir.</p>
+  </div>
+
+  <div class="brooke-chain">
+    <div class="brooke-step" style="background:#ECEAFF;">
+      <div class="bs-letter" style="color:#4C44C6;">C</div>
+      <div class="bs-name" style="color:#3B34A0;">Circonstance</div>
+      <div class="bs-sub" style="color:#4C44C6;">Fait neutre</div>
+    </div>
+    <div class="brooke-step" style="background:#E6F0FB;">
+      <div class="bs-letter" style="color:#1857A5;">T</div>
+      <div class="bs-name" style="color:#0C4080;">Pensée</div>
+      <div class="bs-sub" style="color:#1857A5;">Interprétation</div>
+    </div>
+    <div class="brooke-step" style="background:#DDF3EC;">
+      <div class="bs-letter" style="color:#1B7C62;">E</div>
+      <div class="bs-name" style="color:#0E5040;">Émotion</div>
+      <div class="bs-sub" style="color:#1B7C62;">Ressenti</div>
+    </div>
+    <div class="brooke-step" style="background:#FDF2DC;">
+      <div class="bs-letter" style="color:#B86E10;">A</div>
+      <div class="bs-name" style="color:#7A4A0C;">Action</div>
+      <div class="bs-sub" style="color:#B86E10;">Comportement</div>
+    </div>
+    <div class="brooke-step" style="background:#FCECEA;">
+      <div class="bs-letter" style="color:#C94030;">R</div>
+      <div class="bs-name" style="color:#7A2018;">Résultat</div>
+      <div class="bs-sub" style="color:#C94030;">Conséquence</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>Principe clé :</strong> La circonstance est neutre — c'est ta <strong>pensée</strong> sur la circonstance qui génère l'émotion, qui conditionne l'action, qui produit le résultat. Changer la pensée change tout le reste.
+  </div>
+
+  <div class="card">
+    <div class="card-title">Analyse ta propre chaîne CTEAR</div>
+    <div class="card-sub">Remplis chaque étape avec ta situation actuelle</div>
+
+    <div class="lbl">1. La circonstance (fait objectif, sans jugement)</div>
+    <input type="text" id="b-c" placeholder="Ex : J'ai un examen dans 3 jours" />
+
+    <div class="lbl">2. Quelle pensée ça génère automatiquement ?</div>
+    <input type="text" id="b-t" placeholder="Ex : Je ne suis pas prêt(e), je vais échouer" />
+
+    <div class="lbl">3. Quelle émotion ressens-tu ?</div>
+    <input type="text" id="b-e" placeholder="Ex : Peur, anxiété, découragement" />
+
+    <div class="lbl">4. Quelle action fais-tu (ou évites-tu) ?</div>
+    <input type="text" id="b-a" placeholder="Ex : Je procrastine, je regarde mon téléphone" />
+
+    <div class="lbl">5. Quel résultat ça produit ?</div>
+    <input type="text" id="b-r" placeholder="Ex : Je n'ai pas révisé, je me sens encore moins prêt(e)" />
+
+    <button class="btn btn-primary" onclick="doAnalyzeBrooke()">Analyser ma chaîne →</button>
+    <div class="result-box" id="brooke-res"></div>
+  </div>
+</div>
+
+<!-- CROYANCES -->
+<div id="croyances" class="page">
+  <div class="page-header">
+    <div class="page-tag">Outil 2</div>
+    <h1 class="page-title">Croyances limitantes<br>et ressources</h1>
+    <p class="page-desc">Une croyance limitante est une pensée répétée qui te freine. Elle s'est construite progressivement — et peut tout autant se transformer.</p>
+  </div>
+
+  <table class="croy-table">
+    <tr>
+      <td class="croy-lim"><span class="pill pill-coral" style="margin-bottom:6px;display:inline-block;">Limitante</span><br>Je ne suis pas assez intelligent(e)</td>
+      <td class="croy-arrow">→</td>
+      <td class="croy-res"><span class="pill pill-teal" style="margin-bottom:6px;display:inline-block;">Ressource</span><br>J'apprends et progresse à mon propre rythme</td>
+    </tr>
+    <tr>
+      <td class="croy-lim">Je dois être parfait(e) sinon je vaux rien</td>
+      <td class="croy-arrow">→</td>
+      <td class="croy-res">Le progrès régulier vaut mieux que la perfection paralysante</td>
+    </tr>
+    <tr>
+      <td class="croy-lim">Les autres sont meilleurs que moi</td>
+      <td class="croy-arrow">→</td>
+      <td class="croy-res">Chacun a son propre chemin — je construis le mien</td>
+    </tr>
+    <tr>
+      <td class="croy-lim">Je n'y arriverai jamais</td>
+      <td class="croy-arrow">→</td>
+      <td class="croy-res">Je n'y suis pas encore — chaque effort me rapproche</td>
+    </tr>
+    <tr>
+      <td class="croy-lim">Je ne mérite pas le succès</td>
+      <td class="croy-arrow">→</td>
+      <td class="croy-res">Je construis ma valeur par mes actions chaque jour</td>
+    </tr>
+  </table>
+
+  <div class="card">
+    <div class="card-title">Transforme ta propre croyance limitante</div>
+    <div class="card-sub">Identifie-la, écris-la telle qu'elle se formule dans ta tête</div>
+
+    <div class="lbl">Ta croyance limitante</div>
+    <textarea id="cl-input" placeholder="Ex : Je suis nul(le) en maths, je vais forcément rater..."></textarea>
+
+    <button class="btn btn-primary" onclick="doTransformCroyance()">Transformer en croyance ressource →</button>
+    <div class="result-box" id="croyance-res"></div>
+  </div>
+
+  <div class="info-box">
+    <strong>Comment ça fonctionne :</strong> Une croyance limitante se renforce à chaque fois qu'on la pense. Pour la transformer, il faut 1) la nommer clairement, 2) questionner ses preuves, 3) proposer une pensée alternative plus utile, 4) la répéter jusqu'à ce qu'elle s'ancre.
+  </div>
+</div>
+
+<!-- SMART -->
+<div id="smart" class="page">
+  <div class="page-header">
+    <div class="page-tag">Outil 3</div>
+    <h1 class="page-title">L'objectif SMART<br>bien-être</h1>
+    <p class="page-desc">Un objectif vague ne se réalise jamais. Le cadre SMART te donne une structure pour formuler des intentions qui deviennent des actions.</p>
+  </div>
+
+  <div class="grid-5">
+    <div class="smart-cell">
+      <div class="smart-letter" style="color:#4C44C6;">S</div>
+      <div class="smart-word">Spécifique</div>
+    </div>
+    <div class="smart-cell">
+      <div class="smart-letter" style="color:#1857A5;">M</div>
+      <div class="smart-word">Mesurable</div>
+    </div>
+    <div class="smart-cell">
+      <div class="smart-letter" style="color:#1B7C62;">A</div>
+      <div class="smart-word">Atteignable</div>
+    </div>
+    <div class="smart-cell">
+      <div class="smart-letter" style="color:#B86E10;">R</div>
+      <div class="smart-word">Réaliste</div>
+    </div>
+    <div class="smart-cell">
+      <div class="smart-letter" style="color:#C94030;">T</div>
+      <div class="smart-word">Temporel</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>Mauvais objectif :</strong> "Je veux être moins stressé" — vague, non mesurable, sans délai.<br>
+    <strong>Bon objectif SMART :</strong> "D'ici 2 semaines, je dors 7h minimum et je fais 10 min de respiration chaque matin."
+  </div>
+
+  <div class="card">
+    <div class="card-title">Formule ton objectif SMART</div>
+    <div class="card-sub">Pars de ton intention vague et construis un objectif actionnable</div>
+
+    <div class="lbl">Ton objectif vague au départ</div>
+    <input type="text" id="s-vague" placeholder="Ex : Je veux être moins stressé(e) avant mon examen" />
+
+    <div class="lbl">Dans quel délai veux-tu l'atteindre ?</div>
+    <input type="text" id="s-delai" placeholder="Ex : D'ici 2 semaines, avant mon examen" />
+
+    <div class="lbl">Comment mesureras-tu concrètement le résultat ?</div>
+    <input type="text" id="s-mesure" placeholder="Ex : Dormir 7h minimum, me sentir calme le matin" />
+
+    <button class="btn btn-primary" onclick="doBuildSMART()">Générer mon objectif SMART →</button>
+    <div class="result-box" id="smart-res"></div>
+  </div>
+</div>
+
+<!-- EISENHOWER -->
+<div id="eisenhower" class="page">
+  <div class="page-header">
+    <div class="page-tag">Outil 4</div>
+    <h1 class="page-title">La matrice<br>d'Eisenhower</h1>
+    <p class="page-desc">Classe chaque tâche selon son urgence et son importance. Décide quoi faire maintenant, planifier, déléguer ou éliminer.</p>
+  </div>
+
+  <div class="eis-labels">
+    <div class="eis-axis-y">Important ↑</div>
+    <div class="eis-right">
+      <div class="eis-axis-x">← Urgent · · · · · · · · · Pas urgent →</div>
+      <div class="eis-grid">
+        <div class="quad q1">
+          <div class="quad-head">Faire maintenant</div>
+          <div class="quad-action">Urgent + Important</div>
+          <div class="quad-list" id="q1-list"></div>
+        </div>
+        <div class="quad q2">
+          <div class="quad-head">Planifier</div>
+          <div class="quad-action">Pas urgent + Important</div>
+          <div class="quad-list" id="q2-list"></div>
+        </div>
+        <div class="quad q3">
+          <div class="quad-head">Déléguer</div>
+          <div class="quad-action">Urgent + Pas important</div>
+          <div class="quad-list" id="q3-list"></div>
+        </div>
+        <div class="quad q4">
+          <div class="quad-head">Éliminer</div>
+          <div class="quad-action">Pas urgent + Pas important</div>
+          <div class="quad-list" id="q4-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Ajouter une tâche dans la matrice</div>
+    <div class="card-sub">Décris la tâche puis clique sur le quadrant où elle appartient</div>
+    <div class="lbl">Description de la tâche</div>
+    <input type="text" id="eis-task" placeholder="Ex : Réviser le chapitre 3 avant demain" />
+    <div class="btn-group">
+      <button class="btn-sm" style="background:#FCECEA;color:#7A2018;border-color:#EAB8B2;" onclick="doAddTask(1)">Q1 — Faire maintenant</button>
+      <button class="btn-sm" style="background:#DDF3EC;color:#0E5040;border-color:#9FE0CB;" onclick="doAddTask(2)">Q2 — Planifier</button>
+      <button class="btn-sm" style="background:#FDF2DC;color:#7A4A0C;border-color:#F8C97A;" onclick="doAddTask(3)">Q3 — Déléguer</button>
+      <button class="btn-sm" style="background:#EDEAE3;color:#4A4640;border-color:#C4BFB4;" onclick="doAddTask(4)">Q4 — Éliminer</button>
+    </div>
+  </div>
+</div>
+
+<!-- KARPMAN -->
+<div id="karpman" class="page">
+  <div class="page-header">
+    <div class="page-tag">Outil 5</div>
+    <h1 class="page-title">Le triangle<br>de Karpman</h1>
+    <p class="page-desc">Dans les conflits, on joue inconsciemment un rôle parmi trois. Identifier lequel est la première étape pour sortir du "drama".</p>
+  </div>
+
+  <div class="karp-triangle">
+    <svg class="karp-svg" viewBox="0 0 360 250" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="180,18 15,235 345,235" fill="#ECEAFF" stroke="#B0AAE8" stroke-width="1.5"/>
+      <!-- Sauveur -->
+      <circle cx="180" cy="58" r="36" fill="white" stroke="#B0AAE8" stroke-width="1"/>
+      <text x="180" y="53" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-style="italic" fill="#3B34A0">Sauveur</text>
+      <text x="180" y="68" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#4C44C6">"Je vais t'aider !"</text>
+      <!-- Victime -->
+      <circle cx="65" cy="205" r="36" fill="white" stroke="#B0AAE8" stroke-width="1"/>
+      <text x="65" y="200" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-style="italic" fill="#3B34A0">Victime</text>
+      <text x="65" y="215" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#4C44C6">"C'est ma faute…"</text>
+      <!-- Persécuteur -->
+      <circle cx="295" cy="205" r="40" fill="white" stroke="#B0AAE8" stroke-width="1"/>
+      <text x="295" y="198" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-style="italic" fill="#3B34A0">Persécuteur</text>
+      <text x="295" y="213" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#4C44C6">"C'est ta faute !"</text>
+      <text x="180" y="150" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="10" fill="#8A83C8" font-style="italic">Triangle du drama</text>
+    </svg>
+  </div>
+
+  <div class="karp-cards">
+    <div class="karp-card" style="border-top:3px solid #4C44C6;">
+      <div class="karp-card-title">Victime</div>
+      <div class="karp-card-body">Se sent impuissante, cherche un sauveur.<br><em>"Je n'y peux rien", "C'est pas juste"</em><br><br><strong style="color:#1C1A17;">Sortir :</strong> reprendre sa responsabilité et agir.</div>
+    </div>
+    <div class="karp-card" style="border-top:3px solid #C94030;">
+      <div class="karp-card-title">Persécuteur</div>
+      <div class="karp-card-body">Critique, blame, contrôle.<br><em>"T'aurais dû", "C'est de ta faute"</em><br><br><strong style="color:#1C1A17;">Sortir :</strong> exprimer ses besoins sans attaquer.</div>
+    </div>
+    <div class="karp-card" style="border-top:3px solid #1B7C62;">
+      <div class="karp-card-title">Sauveur</div>
+      <div class="karp-card-body">Aide sans qu'on lui demande, se croit indispensable.<br><em>"Sans moi tu n'y arrives pas"</em><br><br><strong style="color:#1C1A17;">Sortir :</strong> demander "De quoi as-tu besoin ?"</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Quel rôle joues-tu dans cette situation ?</div>
+    <div class="card-sub">Décris brièvement un conflit ou une relation tendue</div>
+    <textarea id="karp-input" placeholder="Ex : Mon ami me demande toujours de l'aide mais quand j'en ai besoin il n'est jamais là..."></textarea>
+    <button class="btn btn-primary" onclick="doAnalyzeKarpman()">Identifier mon rôle →</button>
+    <div class="result-box" id="karpman-res"></div>
+  </div>
+</div>
+
+<!-- ASSERTIVITE -->
+<div id="assertivite" class="page">
+  <div class="page-header">
+    <div class="page-tag">Outil 6</div>
+    <h1 class="page-title">L'assertivité</h1>
+    <p class="page-desc">Exprimer ses besoins et ses limites clairement, sans agressivité ni soumission. La voie du milieu entre deux extrêmes.</p>
+  </div>
+
+  <div class="assert-row">
+    <div class="assert-card" style="background:#FCECEA;" onclick="pickStyle(this,'passif')">
+      <div class="assert-title" style="color:#7A2018;">Passif / Soumis</div>
+      <div class="assert-body" style="color:#7A2018;"><em>"Comme tu veux…"<br>"C'est pas grave…"</em><br><br>Évite le conflit mais accumule frustration et ressentiment.</div>
+    </div>
+    <div class="assert-card active-style" id="assert-ideal" style="background:#DDF3EC;" onclick="pickStyle(this,'assertif')">
+      <div class="assert-title" style="color:#0E5040;">Assertif ✓ Idéal</div>
+      <div class="assert-body" style="color:#0E5040;"><em>"Je ressens… / J'ai besoin de…"<br>"Je ne peux pas faire ça"</em><br><br>Respecte soi ET l'autre. Dit non sans culpabilité.</div>
+    </div>
+    <div class="assert-card" style="background:#FDF2DC;" onclick="pickStyle(this,'agressif')">
+      <div class="assert-title" style="color:#7A4A0C;">Agressif / Dominant</div>
+      <div class="assert-body" style="color:#7A4A0C;"><em>"T'as tort !"<br>"C'est comme ça, point."</em><br><br>Impose sa volonté. Détériore les relations à terme.</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>Méthode DESC</strong> — Décrire · Exprimer · Spécifier · Conséquences<br>
+    Une formule simple pour structurer une communication assertive dans n'importe quelle situation.
+  </div>
+
+  <div class="card">
+    <div class="card-title">Compose ta phrase assertive (méthode DESC)</div>
+    <div class="card-sub">Remplis les 3 premiers champs pour générer ta formulation</div>
+
+    <div class="lbl">Décrire — La situation (faits, sans jugement)</div>
+    <input type="text" id="a-d" placeholder="Ex : Quand tu m'interromps pendant que je parle en réunion…" />
+
+    <div class="lbl">Exprimer — Ce que tu ressens</div>
+    <input type="text" id="a-e" placeholder="Ex : Je me sens ignoré(e) et peu valorisé(e)…" />
+
+    <div class="lbl">Spécifier — Ce que tu veux concrètement</div>
+    <input type="text" id="a-s" placeholder="Ex : J'aimerais pouvoir finir mes phrases avant d'avoir des retours…" />
+
+    <button class="btn btn-primary" onclick="doBuildDESC()">Générer ma phrase assertive →</button>
+    <div class="result-box" id="assert-res"></div>
+  </div>
+</div>
+
+<!-- ANTI-STRESS -->
+<div id="antistress" class="page">
+  <div class="page-header">
+    <div class="page-tag">Plan d'action</div>
+    <h1 class="page-title">Plan anti-stress<br>examen</h1>
+    <p class="page-desc">14 actions concrètes réparties sur 7 jours pour arriver serein(e) le jour J. Coche chaque action au fur et à mesure.</p>
+  </div>
+
+  <div class="prog-bar-wrap">
+    <div class="prog-bar-info">
+      <span id="prog-label">0 / 14 actions complétées</span>
+      <span id="prog-pct" style="font-weight:600;color:#4C44C6;">0%</span>
+    </div>
+    <div class="prog-bar-track">
+      <div class="prog-bar-fill" id="prog-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="cl-list" id="cl-list"></div>
+</div>
+
+</main>
+</div>
+
+<script>
+/* ===== NAVIGATION ===== */
+function go(id) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(function(b) {
+    if (b.getAttribute('onclick') === "go('" + id + "')") b.classList.add('active');
+  });
+  window.scrollTo(0, 0);
+}
+
+/* ===== RESULT HELPER ===== */
+function showResult(id, html) {
+  var el = document.getElementById(id);
+  el.innerHTML = html;
+  el.classList.add('show');
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+/* ===== BROOKE ===== */
+function doAnalyzeBrooke() {
+  var c = document.getElementById('b-c').value.trim();
+  var t = document.getElementById('b-t').value.trim();
+  var e = document.getElementById('b-e').value.trim();
+  var a = document.getElementById('b-a').value.trim();
+  var r = document.getElementById('b-r').value.trim();
+
+  if (!t) {
+    showResult('brooke-res', '<p><strong>Attention :</strong> Remplis au minimum la case "Pensée" pour analyser ta chaîne.</p>');
+    return;
+  }
+
+  var html = '<p><strong>Ta chaîne CTEAR :</strong></p>';
+  if (c) html += '<p>→ <strong>Circonstance :</strong> ' + esc(c) + '</p>';
+  html += '<p>→ <strong>Pensée :</strong> <em>' + esc(t) + '</em></p>';
+  if (e) html += '<p>→ <strong>Émotion :</strong> ' + esc(e) + '</p>';
+  if (a) html += '<p>→ <strong>Action :</strong> ' + esc(a) + '</p>';
+  if (r) html += '<p>→ <strong>Résultat :</strong> ' + esc(r) + '</p>';
+  html += '<p><strong>Le maillon clé à travailler : la Pensée.</strong></p>';
+  html += '<p>La circonstance ne génère pas l\'émotion directement — c\'est l\'interprétation que tu en fais qui le fait. Pour changer le résultat, commence par questionner la pensée :</p>';
+  html += '<p><em>Est-elle 100 % vraie ? Quelle preuve concrète en as-tu ? Quelle pensée alternative serait plus utile et plus juste ?</em></p>';
+
+  // Suggest alternative thought
+  var keywords = t.toLowerCase();
+  if (keywords.indexOf('échouer') > -1 || keywords.indexOf('rater') > -1) {
+    html += '<p><strong>Pensée alternative possible :</strong> <em>"Je ne connais pas encore le résultat. Je peux agir maintenant pour augmenter mes chances."</em></p>';
+  } else if (keywords.indexOf('pas prêt') > -1 || keywords.indexOf('pas capable') > -1) {
+    html += '<p><strong>Pensée alternative possible :</strong> <em>"Je ne suis pas encore au niveau voulu, mais chaque heure de travail me rapproche."</em></p>';
+  } else {
+    html += '<p><strong>Pensée alternative possible :</strong> <em>"Cette situation est difficile, mais je dispose des ressources pour y faire face une étape à la fois."</em></p>';
+  }
+  showResult('brooke-res', html);
+}
+
+/* ===== CROYANCES ===== */
+function doTransformCroyance() {
+  var v = document.getElementById('cl-input').value.trim();
+  if (!v) {
+    showResult('croyance-res', '<p>Écris d\'abord ta croyance limitante dans le champ ci-dessus.</p>');
+    return;
+  }
+
+  var kw = v.toLowerCase();
+  var ressource = '';
+
+  if (kw.indexOf('nul') > -1 || kw.indexOf('mauvais') > -1 || kw.indexOf('incompétent') > -1) {
+    ressource = 'Je ne maîtrise pas encore ce domaine complètement, mais avec de la pratique et de la méthode je progresse chaque jour. Chaque erreur est une information précieuse, pas un jugement sur ma valeur.';
+  } else if (kw.indexOf('jamais') > -1 || kw.indexOf('impossible') > -1) {
+    ressource = 'Je n\'y suis pas encore arrivé(e), mais cela ne signifie pas que c\'est impossible. Chaque effort compte et m\'amène plus près du but.';
+  } else if (kw.indexOf('parfait') > -1 || kw.indexOf('parfaite') > -1) {
+    ressource = 'La perfection n\'existe pas. Ce qui compte c\'est le progrès régulier. Je fais de mon mieux avec ce que j\'ai aujourd\'hui — et c\'est suffisant pour avancer.';
+  } else if (kw.indexOf('meilleurs') > -1 || kw.indexOf('mieux') > -1 || kw.indexOf('moins bon') > -1) {
+    ressource = 'Chacun a son propre chemin et son propre rythme. Me comparer aux autres ne m\'aide pas à progresser. Je me concentre sur ma propre évolution.';
+  } else if (kw.indexOf('mérite') > -1) {
+    ressource = 'Je mérite de réussir et d\'être heureux(se). Le succès ne se réserve pas à certains — il se construit par des actions concrètes et régulières.';
+  } else {
+    ressource = 'La croyance que tu décris est une interprétation construite, pas un fait objectif. Elle a été renforcée à force de répétition — elle peut donc être transformée de la même façon. Questionne-la : quelles preuves réelles en as-tu ? Qu\'est-ce qu\'une personne bienveillante te dirait à ta place ?';
+  }
+
+  var html = '<p><strong>Croyance identifiée :</strong> <em>"' + esc(v) + '"</em></p>';
+  html += '<p><strong>Croyance ressource proposée :</strong></p>';
+  html += '<p><em>' + ressource + '</em></p>';
+  html += '<p><strong>Comment l\'ancrer :</strong> Répète cette formulation chaque matin pendant 21 jours. L\'écrire à la main renforce encore l\'effet. La répétition crée de nouveaux chemins neuronaux.</p>';
+  showResult('croyance-res', html);
+}
+
+/* ===== SMART ===== */
+function doBuildSMART() {
+  var vague = document.getElementById('s-vague').value.trim();
+  var delai = document.getElementById('s-delai').value.trim();
+  var mesure = document.getElementById('s-mesure').value.trim();
+
+  if (!vague) {
+    showResult('smart-res', '<p>Décris d\'abord ton objectif vague dans le premier champ.</p>');
+    return;
+  }
+
+  var d = delai || 'dans les 3 prochaines semaines';
+  var m = mesure || 'un indicateur observable (ex : fréquence, durée, niveau d\'énergie)';
+
+  // Clean the vague objective
+  var clean = vague.replace(/^(je veux|je voudrais|j'aimerais|je souhaite)\s*/i, '').trim();
+  if (!clean) clean = vague;
+
+  var html = '<p><strong>Ton objectif SMART formulé :</strong></p>';
+  html += '<p><em>"' + d + ', je vais ' + esc(clean) + ', en mesurant le résultat par : ' + esc(m) + '."</em></p>';
+  html += '<p><strong>Analyse des 5 critères :</strong></p>';
+  html += '<p>— <strong>S (Spécifique) :</strong> L\'objectif porte sur un aspect précis de ton bien-être</p>';
+  html += '<p>— <strong>M (Mesurable) :</strong> ' + esc(m) + '</p>';
+  html += '<p>— <strong>A (Atteignable) :</strong> L\'objectif est à ta portée si tu l\'intègres progressivement dans ta routine</p>';
+  html += '<p>— <strong>R (Réaliste) :</strong> Il tient compte de ton contexte et de tes contraintes actuelles</p>';
+  html += '<p>— <strong>T (Temporel) :</strong> Délai fixé à ' + esc(d) + '</p>';
+  html += '<p><strong>Prochaine étape :</strong> Planifie la première action concrète que tu peux faire aujourd\'hui ou demain pour commencer.</p>';
+  showResult('smart-res', html);
+}
+
+/* ===== EISENHOWER ===== */
+var eisTasks = {1:[], 2:[], 3:[], 4:[]};
+
+function doAddTask(q) {
+  var input = document.getElementById('eis-task');
+  var task = input.value.trim();
+  if (!task) return;
+  eisTasks[q].push(task);
+  input.value = '';
+  input.focus();
+  renderEis();
+}
+
+function renderEis() {
+  for (var i = 1; i <= 4; i++) {
+    var el = document.getElementById('q' + i + '-list');
+    el.innerHTML = eisTasks[i].map(function(t) {
+      return '<div class="quad-item">' + esc(t) + '</div>';
+    }).join('');
+  }
+}
+
+/* ===== KARPMAN ===== */
+function doAnalyzeKarpman() {
+  var v = document.getElementById('karp-input').value.trim();
+  if (!v) {
+    showResult('karpman-res', '<p>Décris d\'abord ta situation dans le champ ci-dessus.</p>');
+    return;
+  }
+
+  var kw = v.toLowerCase();
+  var role = '';
+  var conseil = '';
+
+  if (kw.indexOf('injuste') > -1 || kw.indexOf('rien à faire') > -1 || kw.indexOf('n\'y peux rien') > -1 || kw.indexOf('toujours moi') > -1) {
+    role = 'Victime';
+    conseil = 'Tu te perçois comme subissant la situation sans pouvoir agir. La sortie : identifie une seule action concrète que TU peux poser maintenant pour modifier la dynamique, même petite.';
+  } else if (kw.indexOf('faute') > -1 || kw.indexOf('aurait dû') > -1 || kw.indexOf('nul') > -1 || kw.indexOf('incompétent') > -1) {
+    role = 'Persécuteur';
+    conseil = 'Tu as tendance à chercher un responsable et à critiquer. La sortie : remplace "c\'est ta faute" par "j\'ai besoin de..." et exprime ton besoin réel sans attaquer.';
+  } else if (kw.indexOf('aide') > -1 || kw.indexOf('toujours là') > -1 || kw.indexOf('sans moi') > -1 || kw.indexOf('jamais là') > -1) {
+    role = 'Sauveur';
+    conseil = 'Tu donnes de l\'aide sans nécessairement qu\'on te la demande, et tu ressens une déception quand ce n\'est pas réciproque. La sortie : avant d\'aider, demande "Est-ce que tu veux vraiment mon aide ?" et apprends à accepter que l\'autre se débrouille.';
+  } else {
+    role = 'Rôle difficile à déterminer précisément';
+    conseil = 'Voici les 3 questions clés pour identifier ton rôle :\n1. Est-ce que je me sens impuissant(e) et victime ? → Rôle Victime\n2. Est-ce que je cherche un coupable et je critique ? → Rôle Persécuteur\n3. Est-ce que j\'aide sans qu\'on me le demande et je m\'épuise ? → Rôle Sauveur';
+  }
+
+  var html = '<p><strong>Rôle probable :</strong> ' + role + '</p>';
+  html += '<p><strong>Analyse :</strong> ' + conseil + '</p>';
+  html += '<p><strong>Rappel :</strong> On peut changer de rôle dans un même conflit, et les 3 rôles se nourrissent mutuellement. Sortir du triangle demande de prendre conscience de son rôle <em>et</em> de changer son comportement, pas seulement ses pensées.</p>';
+  showResult('karpman-res', html);
+}
+
+/* ===== ASSERTIVITE ===== */
+var currentStyle = 'assertif';
+function pickStyle(card, style) {
+  document.querySelectorAll('.assert-card').forEach(function(c) {
+    c.classList.remove('active-style');
+    c.style.borderColor = 'transparent';
+  });
+  card.classList.add('active-style');
+  currentStyle = style;
+}
+
+function doBuildDESC() {
+  var d = document.getElementById('a-d').value.trim();
+  var e = document.getElementById('a-e').value.trim();
+  var s = document.getElementById('a-s').value.trim();
+
+  if (!d) {
+    showResult('assert-res', '<p>Remplis au moins le premier champ (Décrire) pour générer ta phrase.</p>');
+    return;
+  }
+
+  var phrase = esc(d);
+  if (e) phrase += ', je me sens ' + esc(e);
+  if (s) phrase += '. J\'aimerais que ' + esc(s);
+  phrase += '.';
+
+  var html = '<p><strong>Ta phrase assertive (DESC) :</strong></p>';
+  html += '<p><em>"' + phrase + '"</em></p>';
+  html += '<p><strong>Conseils pour la livrer efficacement :</strong></p>';
+  html += '<p>— Parle toujours en "Je" (pas en "Tu as tort" ou "Tu aurais dû")</p>';
+  html += '<p>— Garde un ton calme, posé — pas d\'excuses inutiles avant de commencer</p>';
+  html += '<p>— Si l\'autre réagit fort, laisse un silence de 3 secondes avant de répondre</p>';
+  html += '<p>— Rappelle-toi : exprimer ton besoin est un droit, pas une agression</p>';
+  html += '<p>— Si tu reçois un "non", c\'est ok — l\'assertivité ne garantit pas un résultat, elle garantit une communication saine</p>';
+  showResult('assert-res', html);
+}
+
+/* ===== CHECKLIST ===== */
+var clChecked = {};
+var clData = [
+  {day:'J-7', bg:'#ECEAFF', tc:'#3B34A0', text:'Lister tous les sujets à réviser et créer un planning réaliste sur la semaine'},
+  {day:'J-7', bg:'#ECEAFF', tc:'#3B34A0', text:'Supprimer les distractions : couper les notifications non essentielles du téléphone'},
+  {day:'J-5', bg:'#DDF3EC', tc:'#0E5040', text:'Réviser en blocs de 25 min (technique Pomodoro) avec des pauses de 5 min'},
+  {day:'J-5', bg:'#DDF3EC', tc:'#0E5040', text:'Pratiquer 10 min de cohérence cardiaque matin et soir (inspire 5s, expire 5s)'},
+  {day:'J-4', bg:'#FDF2DC', tc:'#7A4A0C', text:'Faire des fiches résumées — seulement les points clés, pas tout recopier'},
+  {day:'J-4', bg:'#FDF2DC', tc:'#7A4A0C', text:'Marcher ou faire 20 min d\'activité physique pour oxygéner le cerveau'},
+  {day:'J-3', bg:'#FCECEA', tc:'#7A2018', text:'S\'entraîner sur des annales ou exercices de type examen en conditions réelles'},
+  {day:'J-3', bg:'#FCECEA', tc:'#7A2018', text:'Identifier ses croyances limitantes et les reformuler (voir outil Croyances)'},
+  {day:'J-2', bg:'#EDEAE3', tc:'#4A4640', text:'Révision légère uniquement — pas de surcharge la veille de la veille'},
+  {day:'J-2', bg:'#EDEAE3', tc:'#4A4640', text:'Dormir avant minuit — le sommeil consolide la mémoire et ancre les révisions'},
+  {day:'J-1', bg:'#ECEAFF', tc:'#3B34A0', text:'Relire ses fiches résumées une dernière fois, calmement, sans panique'},
+  {day:'J-1', bg:'#ECEAFF', tc:'#3B34A0', text:'Préparer son matériel, sa tenue et vérifier le trajet — tout prévoir la veille'},
+  {day:'J-1', bg:'#ECEAFF', tc:'#3B34A0', text:'Faire une visualisation positive de 5 min : se voir entrer sereinement et répondre avec clarté'},
+  {day:'Jour J', bg:'#DDF3EC', tc:'#0E5040', text:'Manger un repas équilibré, arriver 15 min en avance — respirer lentement'},
+];
+
+function renderChecklist() {
+  var list = document.getElementById('cl-list');
+  list.innerHTML = '';
+  var done = 0;
+  clData.forEach(function(item, i) {
+    var div = document.createElement('div');
+    div.className = 'cl-item' + (clChecked[i] ? ' done' : '');
+    div.innerHTML =
+      '<div class="cl-check">' + (clChecked[i] ? '✓' : '') + '</div>' +
+      '<div class="cl-text">' + item.text + '</div>' +
+      '<span class="cl-day" style="background:' + item.bg + ';color:' + item.tc + ';">' + item.day + '</span>';
+    div.onclick = (function(idx) { return function() {
+      clChecked[idx] = !clChecked[idx];
+      renderChecklist();
+    }; })(i);
+    list.appendChild(div);
+    if (clChecked[i]) done++;
+  });
+  var pct = Math.round(done / clData.length * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = done + ' / ' + clData.length + ' actions complétées';
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+/* ===== UTILS ===== */
+function esc(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ===== INIT ===== */
+renderChecklist();
+</script>
+
+</body>
+</html>
