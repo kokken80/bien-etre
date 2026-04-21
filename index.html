@@ -570,6 +570,66 @@ textarea { min-height: 80px; resize: vertical; line-height: 1.55; }
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 850px) {
+  /* On passe l'application en colonne au lieu de ligne */
+  .app { flex-direction: column; }
+
+  /* La sidebar devient une barre de navigation horizontale en haut */
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    position: relative;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo { padding: 15px; text-align: center; }
+  .logo-title { font-size: 18px; }
+
+  /* On cache les sections et on met les boutons en ligne scrollable */
+  .nav-section { display: none; }
+  .nav {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  
+  .nav-btn {
+    width: auto;
+    padding: 8px 15px;
+    margin-bottom: 0;
+  }
+
+  /* Ajustement de la zone principale */
+  .main {
+    padding: 20px 15px;
+    max-width: 100%;
+  }
+
+  .page-title { font-size: 26px; }
+
+  /* Les grilles passent sur une seule colonne */
+  .grid-2, .grid-3, .grid-5, .grid-home {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  /* Pour l'outil SMART (5 colonnes), on les empile */
+  .grid-5 { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
+
+  /* On adapte les lignes de croyances et d'assertivité */
+  .croy-table td { display: block; width: 100% !important; text-align: center; }
+  .croy-arrow { transform: rotate(90deg); padding: 5px; }
+  .assert-row { grid-template-columns: 1fr; }
+  
+  /* Triangle de Karpman : on empile les cartes */
+  .karp-cards { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
